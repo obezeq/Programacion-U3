@@ -65,5 +65,6 @@ def main():
     else:
         print("ERROR: You haven't introduced the numbers in the correct format.")
 
+# Main function
 if __name__ == '__main__':
     main()
