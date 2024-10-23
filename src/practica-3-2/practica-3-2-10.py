@@ -52,20 +52,24 @@ def remove_client(clients: dict, checked_nif: dict) -> dict:
 def show_client(clients: dict, nif: dict):
     try:
         client = clients[nif]
-        refresh()
-        print("─────────────────────────────────")
-        print(f"    CLIENT {nif} DATA")
-        print("─────────────────────────────────")
-        print(f"- NIF: {nif}")
-        print(f"- Name: {client["name"]}")
-        print(f"- Address: {client["address"]}")
-        print(f"- Phone Number: {client["phone"]}")
-        print(f"- Email: {client["email"]}")
-        print(f"- Preferred: {client["preferred"]}\n")
+    except:
+        print(f"\n[-] Client {nif} not found.\n")
+        input("> Press [ENTER] to continue.")
+    else:
+        try:
+            print("─────────────────────────────────")
+            print(f"    CLIENT {nif} DATA")
+            print("─────────────────────────────────")
+            print(f"- NIF: {nif}")
+            print(f"- Name: {client["name"]}")
+            print(f"- Address: {client["address"]}")
+            print(f"- Phone Number: {client["phone"]}")
+            print(f"- Email: {client["email"]}")
+            print(f"- Preferred: {client["preferred"]}\n")
+        except Exception as e:
+            print(f"\n[-] UNEXPECTED ERROR (Closing program):\n{e}\n")
+            exit()
 
-    except Exception as e:
-        print(f"\n[-] UNEXPECTED ERROR (Closing program):\n{e}\n")
-        exit()
 
 def show_clients(clients: dict):
     try:
@@ -93,6 +97,7 @@ def show_preferred_clients(clients: dict):
         for client in clients:
             preferred = clients[client]["preferred"]
             if preferred == "y":
+                refresh()
                 show_client(clients, client)
 
     except Exception as e:
@@ -201,7 +206,7 @@ def menu_handler(clients: dict, option: int):
             checked_nif = check_nif(nif)
             if checked_nif:
                 bad_format = False
-                clients = show_client(clients, checked_nif)
+                show_client(clients, checked_nif)
                 input("> Press [ENTER] to continue.")
             else:
                 print("[-] ERROR: You have introduced an incorrect NIF format.")
@@ -213,11 +218,11 @@ def menu_handler(clients: dict, option: int):
 
         elif option == 5:
             bad_format = False
-            show_clients(clients)
+            show_preferred_clients(clients)
 
         elif option == 6:
             bad_format = False
-            show_preferred_clients(clients)
+            return False
 
     return clients
 
@@ -262,6 +267,8 @@ def menu(clients: dict):
             option = False
         elif option > 0:
             clients = menu_handler(clients, option)
+            if clients == -1:
+                option = False
         else:
             option = True
             print("\n[-] ERROR: You have introduced an incorrect option.")
