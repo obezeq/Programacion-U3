@@ -96,9 +96,11 @@ def show_preferred_clients(clients: dict):
 
         for client in clients:
             preferred = clients[client]["preferred"]
-            if preferred == "y":
+            if preferred == "Yes":
                 refresh()
                 show_client(clients, client)
+
+        input("\n > PRESS [ENTER] to continue.")
 
     except Exception as e:
         print(f"\n[-] UNEXPECTED ERROR (Closing program):\n{e}\n")
