@@ -41,22 +41,44 @@ def unique_primary_students_not_in_secundary(primary_students: list, secondary_s
     print("──────────────────────────────────────────────────────────────────")
 
     # Get unique primary students not repeated in secundary
-    new_p_students = primary_students
+    primary_students = list(primary_students)
+    secondary_students = list(secondary_students)
+    new_primary_students = primary_students.copy()
+
     for p_student in primary_students:
         for s_student in secondary_students:
             if p_student == s_student:
-                new_p_students.pop(p_student)
+                new_primary_students.remove(p_student)
 
     # Remove duplicate primary students
     unique_students = []
-    for student in new_p_students:
+    for student in new_primary_students:
         if student not in unique_students:
             unique_students.append(student)
 
 
-    unique_p_students = tuple(unique_p_students)
-    for u_p_student in unique_p_students:
-        print(f"- {u_p_student}")
+    new_primary_students = tuple(new_primary_students)
+    if new_primary_students:
+        for u_p_student in new_primary_students:
+            print(f"- {u_p_student}")
+    else:
+        print("- There is no unique primary students not repeated in secundary.")
+
+# Show if all the primary students name are included in secondary
+def show_if_p_students_are_in_s_students(primary_students: list, secondary_students: list):
+    print("──────────────────────────────────────────────────────────────────")
+    print("    SHOW IF ALL THE PRIMARY STUDENTS ARE INCLUDED IN SECUNDARY")
+    print("──────────────────────────────────────────────────────────────────")
+    all_included = True
+    for p_student in primary_students:
+        if p_student not in secondary_students:
+            all_included = False
+            break
+
+    if all_included:
+        print("- [+] All primary students are included in secondary")
+    else:
+        print("- [-] All primary students are not included in secondary")
 
 # ───────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -107,6 +129,7 @@ def main():
     get_unique_students(primary_students, secondary_students)
     repeated_students(primary_students, secondary_students)
     unique_primary_students_not_in_secundary(primary_students, secondary_students)
+    show_if_p_students_are_in_s_students(primary_students, secondary_students)
 
 
 # Program starts
