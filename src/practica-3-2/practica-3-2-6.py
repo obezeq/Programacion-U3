@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 # Check age and convert to number
-def check_age(age: str) -> (int | bool):
+def check_age(age: str) -> int:
+    """Check AGE returns the age converted to number"""
     try:
         age = int(age)
         return age
